@@ -17,4 +17,20 @@
 <footer class="footer" id="about"><div class="container"><div class="footer-main"><div class="footer-brand"><a class="brand brand-light" href="#home"><span class="brand-mark">✉</span><span>Free<span class="brand-green">SMS</span></span></a><p>A simpler way to view publicly shared SMS. Built around transparency, responsible use and real provider data.</p></div><div class="footer-links"><div><b>Explore</b><a href="#numbers">Phone numbers</a><a href="#how-it-works">How it works</a><a href="#faq">FAQs</a></div><div><b>Information</b><a href="#privacy">Privacy policy</a><a href="#terms">Terms of service</a><a href="mailto:hello@freesms.example">Contact us</a></div></div></div><div class="footer-bottom"><span>© <span id="year"></span> FreeSMS. All rights reserved.</span><span><span class="status-dot muted-dot"></span> Provider integration not yet active</span></div></div></footer></div>
 <script>
 const app=document.getElementById('app');document.getElementById('year').textContent=new Date().getFullYear();document.getElementById('theme').addEventListener('click',()=>{app.classList.toggle('dark');document.getElementById('theme').textContent=app.classList.contains('dark')?'☀':'☾'});document.getElementById('menu').addEventListener('click',()=>document.getElementById('nav').classList.toggle('nav-open'));document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nav').classList.remove('nav-open')));document.querySelectorAll('.faq-item button').forEach(b=>b.addEventListener('click',()=>{const item=b.parentElement;item.classList.toggle('faq-active');b.setAttribute('aria-expanded',item.classList.contains('faq-active'))}));const search=document.getElementById('search'),filter=document.getElementById('filter'),cards=[...document.querySelectorAll('.country-card')];function filterCountries(){let q=search.value.toLowerCase(),f=filter.value,shown=0;cards.forEach(c=>{let match=(f==='ALL'||c.dataset.country===f)&&c.textContent.toLowerCase().includes(q);c.hidden=!match;if(match)shown++});document.getElementById('empty').hidden=shown===0;document.getElementById('no-match').hidden=shown!==0}search.addEventListener('input',filterCountries);filter.addEventListener('change',filterCountries);cards.forEach(c=>c.addEventListener('click',()=>{filter.value=c.dataset.country;filterCountries();document.getElementById('numbers').scrollIntoView({behavior:'smooth'})}));
-</script></body></html>
+</script></body>
+<script>
+const API_URL = "https://freesms-795p.onrender.com";
+
+async function loadNumbers() {
+  try {
+    const response = await fetch(`${API_URL}/api/numbers`);
+    const numbers = await response.json();
+    console.log("FreeSMS numbers:", numbers);
+  } catch (error) {
+    console.error("Could not load numbers:", error);
+  }
+}
+
+loadNumbers();
+</script>
+</html>
